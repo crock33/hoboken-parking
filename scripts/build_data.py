@@ -28,5 +28,10 @@ for street, side, dh, loc in rows:
         days = d or [x for x in DAYS if x in dh][:1]
     s, e = parse_time(time_part)
     out.append(dict(street=street.rstrip("."), side=side, days=days, start=s, end=e, location=loc, raw=dh))
+seen = {}
+for o in out:
+    base = re.sub(r"[^a-z0-9]+", "-", (o["street"] + " " + o["side"]).lower()).strip("-")
+    seen[base] = seen.get(base, 0) + 1
+    o["id"] = base + "-" + str(seen[base])
 json.dump(out, open("docs/data.json", "w"), indent=1)
 print(len(out), "rows"); bad = [r for r in out if not r["days"]]; print("unparsed:", bad)

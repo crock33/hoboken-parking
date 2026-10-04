@@ -52,6 +52,7 @@ details{background:var(--card);border:1px solid var(--line);border-radius:14px;p
 const DAYNUM={Sunday:0,Monday:1,Tuesday:2,Wednesday:3,Thursday:4,Friday:5,Saturday:6};
 const $=s=>document.querySelector(s);
 const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
+const TOPIC_PREFIX='hoboken-clean-7f3a9c'; // keep in sync with scripts/notify.py
 let DATA=[],favs=store.get('favs',[]),car=store.get('car',null),settings=store.get('settings',{dayBefore:true,morning:true,hourBefore:true,suspended:false});
 
 // ---- holidays (cleaning suspended). Verify against city/Nixle alerts. ----
@@ -98,14 +99,15 @@ function safety(r,st){ // plain-language verdict
   if(ms<864e5)return{c:'r',t:'⚠️ Cleaned in '+fmtDur(ms),s:when};
   if(ms<2*864e5)return{c:'y',t:'Safe until '+fmtT(st.next.start),s:'in '+fmtDur(ms)};
   return{c:'g',t:'✅ Safe until '+fmtT(st.next.start),s:'in '+fmtDur(ms)}}
-function card(r,{park=true}={}){
+function card(r,{park=true,alerts=false}={}){
   const st=status(r),v=safety(r,st),k=key(r),on=favs.includes(k);
   return`<div class="card ${v.c}"><div class="top"><div class="info"><div class="name">${place(r)}</div>
   <div class="sub">${r.location}</div>
   <div class="sub">${st.last?'Last cleaned '+fmtDur(st.sinceMs)+' ago':'Not cleaned recently'} · cleans ${dayShort(r)} ${hrs(r)}</div>
   <div class="safe ${v.c}">${v.t}</div></div>
   <button class="star ${on?'on':''}" data-fav="${k}" aria-label="Save">${on?'★':'☆'}</button></div>
-  ${park?`<div class="row"><button class="btn" data-park="${k}">I parked here</button></div>`:''}</div>`}
+  ${park?`<div class="row"><button class="btn" data-park="${k}">I parked here</button></div>`:''}
+  ${alerts?`<div class="row"><a class="btn alt" style="text-decoration:none;text-align:center" href="ntfy://ntfy.sh/${TOPIC_PREFIX}-${r.id}">🔔 Alert me when it's clear</a><a class="btn alt" style="flex:none;text-decoration:none" target="_blank" href="https://ntfy.sh/${TOPIC_PREFIX}-${r.id}">Web</a></div>`:''}</div>`}
 let filter='all';
 function renderFind(){
   const q=($('#q')?.value||'').toLowerCase(),now=new Date();
@@ -123,7 +125,7 @@ function renderFind(){
   $('#q').oninput=()=>{const p=$('#q').selectionStart;renderFind();$('#q').focus();$('#q').setSelectionRange(p,p)}}
 function renderFav(){
   const rows=DATA.filter(r=>favs.includes(key(r)));
-  $('#tab-fav').innerHTML=rows.length?rows.map(r=>card(r)).join(''):'<div class="empty">No saved streets yet.<br>Tap ☆ on any street to keep it here.</div>'}
+  $('#tab-fav').innerHTML=rows.length?`<details class="how"><summary>🔔 Get an alert when a block is clear</summary><p class="hint">1. Install the free <b>ntfy</b> app (iPhone App Store / Google Play).<br>2. Tap <b>Alert me when it's clear</b> under a saved block and confirm the subscription.<br>3. You'll get a notification the moment that block's street cleaning ends, even with this app closed.<br>Alerts skip federal holidays but don't know about weather suspensions. Anyone with a topic link can read it, so don't treat it as private.</p></details>`+rows.map(r=>card(r,{alerts:true})).join(''):'<div class="empty">No saved streets yet.<br>Tap ☆ on any street to keep it here.</div>'}
 function renderCar(){
   const r=car&&rowOf(car.key);let h='';
   if(r){const st=status(r),v=safety(r,st);
