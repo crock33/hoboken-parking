@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b3d6b">
+<title>Hoboken Parking</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root{--bg:#f4f6f8;--card:#fff;--ink:#111;--mute:#667;--line:#e2e6ea;--green:#1a9f4b;--yellow:#c99700;--red:#d23b3b;--blue:#0b3d6b}
+@media(prefers-color-scheme:dark){:root{--bg:#10151a;--card:#1b232b;--ink:#f1f3f5;--mute:#9aa6b2;--line:#2b3641}}
+*{box-sizing:border-box}body{margin:0;font:17px/1.35 -apple-system,system-ui,sans-serif;background:var(--bg);color:var(--ink);padding-bottom:84px}
+header{background:var(--blue);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:5}
+header h1{margin:0;font-size:20px}header small{opacity:.85}
+main{padding:12px;max-width:640px;margin:auto}
+h2{font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);margin:20px 4px 6px}
+.card{background:var(--card);border:1px solid var(--line);border-left:8px solid var(--mute);border-radius:14px;padding:12px 14px;margin:8px 0}
+.card.g{border-left-color:var(--green)}.card.y{border-left-color:var(--yellow)}.card.r{border-left-color:var(--red)}
+.top{display:flex;gap:8px;align-items:flex-start}.top .info{flex:1;min-width:0}
+.name{font-size:19px;font-weight:700}.sub{color:var(--mute);font-size:14px}
+.safe{font-size:17px;font-weight:700;margin-top:6px}.safe.g{color:var(--green)}.safe.y{color:var(--yellow)}.safe.r{color:var(--red)}
+.row{display:flex;gap:8px;margin-top:10px}
+.star{font-size:28px;background:none;border:0;cursor:pointer;color:var(--mute);padding:0 4px}.star.on{color:#f5b301}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;padding:12px 0 10px;border:0;background:none;color:var(--mute);font-size:13px;font-weight:600;border-top:3px solid transparent}nav button span{display:block;font-size:22px}nav button.on{color:var(--blue);border-top-color:var(--blue)}
+input[type=search],select{font-size:17px;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:100%;margin:5px 0}
+button.btn{font-size:17px;padding:12px;border-radius:10px;border:0;background:var(--blue);color:#fff;font-weight:700;flex:1}button.btn.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.chips{display:flex;gap:8px;margin:8px 0;overflow-x:auto}.chip{padding:8px 14px;border-radius:20px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:15px;white-space:nowrap}.chip.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.banner{background:#fff3cd;color:#5c4400;border-radius:10px;padding:10px 12px;margin:8px 0;font-size:15px}
+.hero{border-radius:16px;padding:18px;color:#fff;margin:8px 0}.hero.g{background:var(--green)}.hero.y{background:var(--yellow)}.hero.r{background:var(--red)}.hero.n{background:#6b7785}
+.hero .big{font-size:38px;font-weight:800;line-height:1.1}
+label.chk{display:flex;gap:10px;align-items:center;margin:10px 0}label.chk input{width:22px;height:22px;margin:0}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}summary{font-weight:700;cursor:pointer}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:#222;color:#fff;padding:10px 18px;border-radius:20px;z-index:9;font-size:15px}
+#map{height:300px;border-radius:12px;margin:8px 0}.pick{display:block;width:100%;text-align:left;margin:6px 0}.hint{color:var(--mute);font-size:14px;margin:4px 0}
+.hide{display:none}.empty{text-align:center;color:var(--mute);padding:30px 10px}
+</style>
+</head>
+<body>
+<header><h1>Hoboken Street Cleaning</h1><small id="now"></small></header>
+<main><div id="banner"></div><section id="tab-find"></section><section id="tab-car" class="hide"><div id="carStatus"></div>
+<div class="card" id="locate" style="border-left-color:var(--blue)"><div class="name">Where did you park?</div>
+<form id="locForm" class="row"><input id="locQ" type="search" placeholder="e.g. 13th and Bloomfield" autocomplete="off" style="margin:0"><button class="btn" style="flex:none">Go</button></form>
+<div class="row"><button class="btn alt" id="gps">📍 Use my location</button><button class="btn alt" id="pinBtn">🗺 Drop a pin</button></div>
+<div id="mapWrap" class="hide"><div class="hint">Tap the map where your car is.</div><div id="map"></div></div>
+<div id="locRes"></div></div>
+<div id="carSettings"></div></section><section id="tab-fav" class="hide"></section></main>
+<nav><button data-t="find" class="on"><span>🔎</span>Find parking</button><button data-t="car"><span>🚗</span>My car</button><button data-t="fav"><span>★</span>Saved</button></nav>
+<script>
+const DAYNUM={Sunday:0,Monday:1,Tuesday:2,Wednesday:3,Thursday:4,Friday:5,Saturday:6};
+const $=s=>document.querySelector(s);
+const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
+let DATA=[],favs=store.get('favs',[]),car=store.get('car',null),settings=store.get('settings',{dayBefore:true,morning:true,hourBefore:true,suspended:false});
+
+// ---- holidays (cleaning suspended). Verify against city/Nixle alerts. ----
+function nthWeekday(y,m,wd,n){const d=new Date(y,m,1);const off=(wd-d.getDay()+7)%7;return new Date(y,m,1+off+7*(n-1))}
+function lastWeekday(y,m,wd){const d=new Date(y,m+1,0);return new Date(y,m,d.getDate()-((d.getDay()-wd+7)%7))}
+function holidays(y){return[new Date(y,0,1),nthWeekday(y,0,1,3),nthWeekday(y,1,1,3),lastWeekday(y,4,1),new Date(y,5,19),new Date(y,6,4),nthWeekday(y,8,1,1),nthWeekday(y,9,1,2),new Date(y,10,11),nthWeekday(y,10,4,4),new Date(y,11,25)].map(d=>d.toDateString())}
+const isHoliday=d=>holidays(d.getFullYear()).includes(d.toDateString());
+
+// ---- schedule math ----
+const key=r=>r.street+'|'+r.side+'|'+r.location+'|'+r.raw;
+function occurrences(r,from,count=14){ // upcoming/past cleaning windows around `from`
+  const out=[];
+  for(let i=-8;i<=count;i++){const d=new Date(from.getFullYear(),from.getMonth(),from.getDate()+i);
+    if(!r.days.some(n=>DAYNUM[n]===d.getDay()))continue;
+    out.push({start:new Date(d.getFullYear(),d.getMonth(),d.getDate(),r.start),end:new Date(d.getFullYear(),d.getMonth(),d.getDate(),r.end),skipped:isHoliday(d)})}
+  return out}
+function status(r,now=new Date()){
+  const occ=occurrences(r,now).filter(o=>!o.skipped);
+  const active=occ.find(o=>o.start<=now&&now<o.end);
+  const last=[...occ].reverse().find(o=>o.end<=now);
+  const next=occ.find(o=>o.start>now);
+  return{active,last,next,sinceMs:last?now-last.end:Infinity}}
+const fmtDur=ms=>{const m=Math.round(ms/60000);if(m<60)return m+'m';const h=Math.floor(m/60);return h<24?h+'h '+(m%60)+'m':Math.floor(h/24)+'d '+(h%24)+'h'};
+const fmtT=d=>d.toLocaleString([],{weekday:'short',hour:'numeric',minute:'2-digit'});
+const sideLabel=s=>({East:'East side',West:'West side',North:'North side',South:'South side',Both:'Both sides'}[s]||s);
+
+function badge(st){
+  if(settings.suspended)return['n','Paused'];
+  if(st.active)return['r','Cleaning NOW'];
+  if(!st.next)return['n','—'];
+  const ms=st.next.start-new Date();
+  return[ms<864e5?'r':ms<2*864e5?'y':'g','Next in '+fmtDur(ms)]}
+
+// ---- views ----
+const rowOf=k=>DATA.find(x=>key(x)===k);
+const place=r=>`${r.street} · ${sideLabel(r.side)}`;
+const hrs=r=>{const f=h=>h===12?'noon':(h%12||12)+(h<12?'am':'pm');return f(r.start)+'–'+f(r.end)};
+const dayShort=r=>r.days.length>1?'Mon–Fri':r.days[0].slice(0,3);
+function safety(r,st){ // plain-language verdict
+  if(settings.suspended)return{c:'n',t:'Cleaning paused today',s:'Check posted signs'};
+  if(st.active)return{c:'r',t:'🚫 Being cleaned NOW',s:'Until '+st.active.end.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})};
+  if(!st.next)return{c:'n',t:'No upcoming cleaning',s:''};
+  const ms=st.next.start-new Date(),when=fmtT(st.next.start)+'–'+st.next.end.toLocaleTimeString([],{hour:'numeric'});
+  if(ms<864e5)return{c:'r',t:'⚠️ Cleaned in '+fmtDur(ms),s:when};
+  if(ms<2*864e5)return{c:'y',t:'Safe until '+fmtT(st.next.start),s:'in '+fmtDur(ms)};
+  return{c:'g',t:'✅ Safe until '+fmtT(st.next.start),s:'in '+fmtDur(ms)}}
+function card(r,{park=true}={}){
+  const st=status(r),v=safety(r,st),k=key(r),on=favs.includes(k);
+  return`<div class="card ${v.c}"><div class="top"><div class="info"><div class="name">${place(r)}</div>
+  <div class="sub">${r.location}</div>
+  <div class="sub">${st.last?'Last cleaned '+fmtDur(st.sinceMs)+' ago':'Not cleaned recently'} · cleans ${dayShort(r)} ${hrs(r)}</div>
+  <div class="safe ${v.c}">${v.t}</div></div>
+  <button class="star ${on?'on':''}" data-fav="${k}" aria-label="Save">${on?'★':'☆'}</button></div>
+  ${park?`<div class="row"><button class="btn" data-park="${k}">I parked here</button></div>`:''}</div>`}
+let filter='all';
+function renderFind(){
+  const q=($('#q')?.value||'').toLowerCase(),now=new Date();
+  const list=DATA.filter(r=>(filter!=='fav'||favs.includes(key(r)))&&(r.street+' '+sideLabel(r.side)+' '+r.location).toLowerCase().includes(q))
+    .map(r=>({r,s:status(r)}));
+  const G=[['Being cleaned right now — avoid',x=>x.s.active],['Cleaned in the last 3 hours — best bets',x=>x.s.sinceMs<108e5],['Cleaned in the last 24 hours',x=>x.s.sinceMs<864e5],['Cleaned earlier this week',x=>true]];
+  const used=new Set();let html='';
+  // active ones go last in display but are grouped first for classification
+  const out=G.map(([t,f])=>{const items=list.filter(x=>!used.has(x)&&f(x));items.forEach(x=>used.add(x));return[t,items.sort((a,b)=>a.s.sinceMs-b.s.sinceMs)]});
+  const order=[1,2,3,0];
+  order.forEach(i=>{const[t,items]=out[i];if(items.length)html+=`<h2>${t} (${items.length})</h2>`+items.map(x=>card(x.r)).join('')});
+  $('#tab-find').innerHTML=`<input id="q" type="search" placeholder="Search a street…" value="${q.replace(/"/g,'')}" autocomplete="off">
+   <div class="chips"><button class="chip ${filter==='all'?'on':''}" data-f="all">All streets</button><button class="chip ${filter==='fav'?'on':''}" data-f="fav">★ Saved only</button></div>`
+   +(html||'<div class="empty">No streets match.</div>');
+  $('#q').oninput=()=>{const p=$('#q').selectionStart;renderFind();$('#q').focus();$('#q').setSelectionRange(p,p)}}
+function renderFav(){
+  const rows=DATA.filter(r=>favs.includes(key(r)));
+  $('#tab-fav').innerHTML=rows.length?rows.map(r=>card(r)).join(''):'<div class="empty">No saved streets yet.<br>Tap ☆ on any street to keep it here.</div>'}
+function renderCar(){
+  const r=car&&rowOf(car.key);let h='';
+  if(r){const st=status(r),v=safety(r,st);
+    h+=`<div class="hero ${v.c}"><div class="sub" style="color:#fff;opacity:.85">You're parked on</div><div class="name" style="font-size:22px">${place(r)}</div>
+    <div class="sub" style="color:#fff;opacity:.85">${r.location}</div><div class="big" style="margin-top:12px">${v.t}</div><div style="font-size:18px">${v.s}</div></div>
+    <div class="row"><button class="btn" id="ics">📅 Add reminders to calendar</button><button class="btn alt" id="clear">I've left</button></div>`}
+  else h+=`<div class="empty">Not parked yet.</div>`;
+  $('#carStatus').innerHTML=h;
+  $('#carSettings').innerHTML=`<details><summary>Reminders</summary>
+  <label class="chk"><input type="checkbox" id="s1" ${settings.dayBefore?'checked':''}> 1 day before</label>
+  <label class="chk"><input type="checkbox" id="s2" ${settings.morning?'checked':''}> Morning of (7am)</label>
+  <label class="chk"><input type="checkbox" id="s3" ${settings.hourBefore?'checked':''}> 1 hour before</label>
+  <label class="chk"><input type="checkbox" id="s4" ${settings.suspended?'checked':''}> Cleaning suspended today (weather/holiday)</label>
+  <div class="sub">Pop-up alerts only work while this page is open. Add them to your calendar for alerts that always fire.</div></details>`;
+  $('#clear')?.addEventListener('click',()=>{car=null;store.set('car',null);schedule();render()});
+  $('#ics')?.addEventListener('click',downloadIcs);
+  [['s1','dayBefore'],['s2','morning'],['s3','hourBefore'],['s4','suspended']].forEach(([id,k])=>$('#'+id).onchange=e=>{settings[k]=e.target.checked;store.set('settings',settings);schedule();render()})}
+
+// ---- locating the car: typed corner, GPS, or map pin ----
+let GEO=null,map=null,marker=null,layer=null;
+const MX=84500,MY=110540;
+function distSeg(p,a,b){const px=p[1]*MX,py=p[0]*MY,ax=a[1]*MX,ay=a[0]*MY,bx=b[1]*MX,by=b[0]*MY,dx=bx-ax,dy=by-ay,l=dx*dx+dy*dy||1;
+  let u=Math.max(0,Math.min(1,((px-ax)*dx+(py-ay)*dy)/l));return{d:Math.hypot(px-ax-u*dx,py-ay-u*dy),cross:dx*(py-ay)-dy*(px-ax)}}
+function nearestOnRow(p,g){let best=null;for(let i=0;i<g.pts.length-1;i++){const x=distSeg(p,g.pts[i],g.pts[i+1]);if(!best||x.d<best.d)best=x}
+  if(!best)return null;best.side=g.axis==='ns'?(best.cross>0?'West':'East'):(best.cross>0?'North':'South');return best}
+function blocksNear(p,{maxD=45,bySide=true}={}){
+  const out=[];DATA.forEach((r,i)=>{const g=GEO.rows[i];if(!g||g.pts.length<2)return;const n=nearestOnRow(p,g);if(!n||n.d>maxD)return;
+    if(bySide&&!(r.side==='Both'||r.side===n.side))return;out.push({r,i,d:n.d})});
+  return out.sort((a,b)=>a.d-b.d)}
+const ordinal=n=>{const t=['th','st','nd','rd'],v=n%100;return n+(t[(v-20)%10]||t[v]||t[0])};
+const WORDS="first second third fourth fifth sixth seventh eighth ninth tenth eleventh twelfth thirteenth fourteenth fifteenth sixteenth".split(' ');
+function normKey(s){s=s.toLowerCase().replace(/\./g,'').trim();WORDS.forEach((w,i)=>{s=s.replace(new RegExp('\\b'+w+'\\b'),ordinal(i+1))});
+  return s.replace(/\bst$/,'street').replace(/\bave$/,'avenue').replace(/\bhwy$/,'highway').replace(/\bpl$/,'place').replace(/\bter$/,'terrace')}
+const nameOf=k=>DATA.find(r=>normKey(r.street)===k)?.street||k;
+function findStreet(q){
+  q=q.toLowerCase().replace(/[.,']/g,'').trim();if(!q)return null;
+  q=q.replace(/^(\d+)(st|nd|rd|th)?$/,(m,n)=>ordinal(+n));
+  const W="first second third fourth fifth sixth seventh eighth ninth tenth eleventh twelfth thirteenth fourteenth fifteenth sixteenth".split(' ');
+  W.forEach((w,i)=>{if(q===w)q=ordinal(i+1)});
+  const keys=Object.keys(GEO.streets);
+  const rank=k=>/(street|avenue|highway)$/.test(k)?0:1;
+  const hit=keys.filter(k=>k.startsWith(q+' ')||k.startsWith(q)).sort((a,b)=>rank(a)-rank(b)||a.length-b.length);
+  return hit[0]||keys.filter(k=>k.includes(q)).sort((a,b)=>a.length-b.length)[0]||null}
+function corner(k1,k2){let best=null;
+  for(const l1 of GEO.streets[k1].lines)for(const a of l1)for(const l2 of GEO.streets[k2].lines)for(const b of l2){const d=Math.hypot((a[0]-b[0])*MY,(a[1]-b[1])*MX);if(!best||d<best.d)best={d,p:[(a[0]+b[0])/2,(a[1]+b[1])/2]}}
+  return best}
+function showCandidates(c,note){
+  const el=$('#locRes');
+  if(!c.length){el.innerHTML='<div class="hint">Couldn\'t match that to a street with cleaning rules. Try "13th and Bloomfield".</div>';return}
+  const seen=new Set(),list=c.filter(x=>!seen.has(key(x.r))&&seen.add(key(x.r))).slice(0,8);
+  el.innerHTML=`<div class="hint">${note}</div>`+list.map(x=>`<button class="btn alt pick" data-park="${key(x.r)}"><b>${place(x.r)}</b><br><span class="sub">${x.r.location} · ${status(x.r).next?safety(x.r,status(x.r)).t:''}</span></button>`).join('');
+  if(map){if(layer)layer.remove();layer=L.layerGroup(list.map(x=>L.polyline(GEO.rows[x.i].pts,{color:'#0b3d6b',weight:7,opacity:.6}))).addTo(map)}}
+function byText(q){
+  const parts=q.split(/\s+(?:and|at|&|on)\s+|\s*[&\/@]\s*/i).map(s=>s.trim()).filter(Boolean);
+  const ks=parts.map(findStreet).filter(Boolean);
+  if(!ks.length)return showCandidates([], '');
+  if(ks.length===1||ks[0]===ks[1]){const idx=[];DATA.forEach((r,i)=>{if(GEO.rows[i]?.pts.length&&normKey(r.street)===ks[0])idx.push({r,i,d:0})});
+    return showCandidates(idx,`All blocks on ${nameOf(ks[0])}. Add a cross street (e.g. "${parts[0]} and 13th") to narrow it down.`)}
+  const c=corner(ks[0],ks[1]);
+  if(map)map.setView(c.p,17);setMarker(c.p);
+  showCandidates(blocksNear(c.p,{maxD:40,bySide:false}),`Corner of ${ks.map(nameOf).join(' & ')}. Which block are you on?`)}
+function setMarker(p){if(!map)return;if(marker)marker.setLatLng(p);else marker=L.marker(p).addTo(map)}
+function byPoint(p,label){
+  setMarker(p);if(map)map.setView(p,18);
+  const c=blocksNear(p,{maxD:45,bySide:true});
+  showCandidates(c,c.length?`${label}. Tap the one that matches your car:`:'');
+  if(!c.length)$('#locRes').innerHTML='<div class="hint">No street with cleaning rules within ~45 m of that spot. Try moving the pin closer to the curb.</div>'}
+function initMap(){
+  if(map)return;map=L.map('map').setView([40.745,-74.032],15);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
+  map.on('click',e=>byPoint([e.latlng.lat,e.latlng.lng],'Pin dropped'))}
+function wireLocate(){
+  $('#locForm').onsubmit=e=>{e.preventDefault();byText($('#locQ').value)};
+  $('#pinBtn').onclick=()=>{$('#mapWrap').classList.remove('hide');initMap();setTimeout(()=>map.invalidateSize(),50)};
+  $('#gps').onclick=()=>{if(!navigator.geolocation)return toast('Location not available');toast('Finding you…');
+    navigator.geolocation.getCurrentPosition(pos=>{$('#mapWrap').classList.remove('hide');initMap();setTimeout(()=>{map.invalidateSize();byPoint([pos.coords.latitude,pos.coords.longitude],'Your location')},60)},()=>toast('Couldn\'t get your location — type a corner or drop a pin'),{enableHighAccuracy:true,timeout:10000})}}
+function parkAt(k){car={key:k,at:Date.now()};store.set('car',car);askNotify();schedule();render();showTab('car');toast('Saved — we\'ll track this spot')}
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),2200)}
+function showTab(t){document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x.dataset.t===t));['find','car','fav'].forEach(n=>$('#tab-'+n).classList.toggle('hide',n!==t));scrollTo(0,0);store.set('tab',t)}
+
+// ---- alerts (in-page timers; calendar file is the reliable way when app is closed) ----
+let timers=[];
+function askNotify(){if('Notification' in window&&Notification.permission==='default')Notification.requestPermission()}
+function alertTimes(){
+  if(!car)return[];const r=DATA.find(x=>key(x)===car.key);if(!r)return[];
+  const nx=status(r).next;if(!nx)return[];const o=[];
+  if(settings.dayBefore)o.push([new Date(nx.start-864e5),'Street cleaning tomorrow on '+r.street+' ('+fmtT(nx.start)+')']);
+  if(settings.morning)o.push([new Date(nx.start.getFullYear(),nx.start.getMonth(),nx.start.getDate(),7),'Move your car: cleaning today on '+r.street]);
+  if(settings.hourBefore)o.push([new Date(nx.start-36e5),'Cleaning starts in 1 hour on '+r.street]);
+  return o}
+function schedule(){timers.forEach(clearTimeout);timers=[];
+  alertTimes().forEach(([t,msg])=>{const ms=t-Date.now();if(ms>0&&ms<2**31)timers.push(setTimeout(()=>{if('Notification' in window&&Notification.permission==='granted')new Notification('Hoboken parking',{body:msg});else alert(msg)},ms))})}
+function downloadIcs(){
+  const f=d=>d.toISOString().replace(/[-:]/g,'').replace(/\.\d+/,'');
+  const ev=alertTimes().map(([t,msg],i)=>`BEGIN:VEVENT\nUID:hp${Date.now()}${i}@hoboken-parking\nDTSTAMP:${f(new Date())}\nDTSTART:${f(t)}\nDTEND:${f(new Date(+t+9e5))}\nSUMMARY:${msg}\nEND:VEVENT`).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['BEGIN:VCALENDAR\nVERSION:2.0\n'+ev+'\nEND:VCALENDAR'],{type:'text/calendar'}));a.download='hoboken-cleaning.ics';a.click()}
+
+function render(){
+  const now=new Date(),hol=isHoliday(now),days=now.getDay();
+  let nxt=null;DATA.forEach(r=>{const n=status(r).next;if(n&&(!nxt||n.start<nxt.start))nxt=n});
+  const todayAny=DATA.some(r=>status(r).active||occurrences(r,now).some(o=>!o.skipped&&o.start.toDateString()===now.toDateString()));
+  let msg='';
+  if(settings.suspended||hol)msg='Street cleaning is suspended today. Always check the posted signs and city/Nixle alerts.';
+  else if(!todayAny&&nxt)msg='No street cleaning today — park anywhere legal. Cleaning resumes '+fmtT(nxt.start)+'.';
+  $('#banner').innerHTML=msg?`<div class="banner">${msg}</div>`:'';
+  $('#now').textContent=now.toLocaleString([],{weekday:'long',hour:'numeric',minute:'2-digit'});
+  renderFind();renderFav();renderCar()}
+document.addEventListener('click',e=>{const t=e.target;
+  if(t.dataset?.fav){favs=favs.includes(t.dataset.fav)?favs.filter(x=>x!==t.dataset.fav):[...favs,t.dataset.fav];store.set('favs',favs);render()}
+  else if(t.dataset?.park)parkAt(t.dataset.park);
+  else if(t.dataset?.f){filter=t.dataset.f;renderFind()}});
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showTab(b.dataset.t));
+Promise.all([fetch('data.json').then(r=>r.json()),fetch('geo.json').then(r=>r.json())]).then(([d,g])=>{DATA=d;GEO=g;wireLocate();render();schedule();showTab(store.get('tab',car?'car':'find'));
+  setInterval(()=>{if(!['q','sel'].includes(document.activeElement?.id))render()},60000)});
+</script>
+</body>
+</html>

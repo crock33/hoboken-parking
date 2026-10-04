@@ -1,0 +1,1353 @@
+[
+ {
+  "street": "Adams St",
+  "side": "West",
+  "days": [
+   "Monday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "Newark St. to Sixteenth St.",
+  "raw": "Monday - 11 am to 12 noon"
+ },
+ {
+  "street": "Adams St",
+  "side": "East",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "Newark St. to Sixteenth St.",
+  "raw": "Tuesday - 11 am to 12 noon"
+ },
+ {
+  "street": "Bloomfield St",
+  "side": "East",
+  "days": [
+   "Monday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "Observer Hwy. to north boundary",
+  "raw": "Monday - 11 am to 12 noon"
+ },
+ {
+  "street": "Bloomfield St",
+  "side": "West",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "Observer Hwy. to north boundary",
+  "raw": "Tuesday - 11 am to 12 noon"
+ },
+ {
+  "street": "Castle Point Terrace",
+  "side": "East",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "Eighth St. and Tenth St.",
+  "raw": "Wednesday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Castle Point Terrace",
+  "side": "West",
+  "days": [
+   "Friday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "Eighth St. to Tenth St.",
+  "raw": "Friday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Clinton St",
+  "side": "West",
+  "days": [
+   "Monday"
+  ],
+  "start": 9,
+  "end": 10,
+  "location": "Newark St. to Seventeenth St.",
+  "raw": "Monday - 9 am to 10 am"
+ },
+ {
+  "street": "Clinton St",
+  "side": "East",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 9,
+  "end": 10,
+  "location": "Newark St. to Seventeenth St.",
+  "raw": "Tuesday - 9 am to 10 am"
+ },
+ {
+  "street": "Eighth St",
+  "side": "North",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Willow Ave. to Jackson St.",
+  "raw": "Wednesday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Eighth St",
+  "side": "North",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "East boundary to Willow Ave.",
+  "raw": "Wednesday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Eighth St",
+  "side": "South",
+  "days": [
+   "Friday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "East boundary to Willow Ave.",
+  "raw": "Friday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Eighth St",
+  "side": "South",
+  "days": [
+   "Friday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Willow Ave. to Jackson St.",
+  "raw": "Friday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Eleventh St",
+  "side": "North",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "Hudson St. to Willow Ave.",
+  "raw": "Tuesday - 10 am to 11 am"
+ },
+ {
+  "street": "Eleventh St",
+  "side": "South",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Willow Ave. to Hudson St.",
+  "raw": "Wednesday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Eleventh St",
+  "side": "South",
+  "days": [
+   "Thursday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Willow Ave. to Monroe St.",
+  "raw": "Thursday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Eleventh St",
+  "side": "North",
+  "days": [
+   "Friday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Willow Ave. to Monroe St.",
+  "raw": "Friday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Fifteenth St",
+  "side": "South",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Park Ave. to Madison St.",
+  "raw": "Wednesday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Fifteenth St",
+  "side": "North",
+  "days": [
+   "Friday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Park Ave. to Madison St.",
+  "raw": "Friday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Fifteenth St",
+  "side": "South",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Sinatra Drive to Park Ave.",
+  "raw": "Wednesday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Fifth St",
+  "side": "North",
+  "days": [
+   "Monday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Jackson St. to Grand St.",
+  "raw": "Monday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Fifth St",
+  "side": "South",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Jackson St. to Grand St.",
+  "raw": "Tuesday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Fifth St",
+  "side": "North",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "Clinton St. to Sinatra Drive",
+  "raw": "Wednesday - 11 am to 12 noon"
+ },
+ {
+  "street": "Fifth St",
+  "side": "South",
+  "days": [
+   "Thursday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "Clinton St. to Sinatra Drive",
+  "raw": "Thursday - 11 am to 12 noon"
+ },
+ {
+  "street": "First St",
+  "side": "North",
+  "days": [
+   "Monday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Marshall St. to Willow Ave.",
+  "raw": "Monday - 2 pm to 3 pm"
+ },
+ {
+  "street": "First St",
+  "side": "South",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Marshall St. to Willow Ave.",
+  "raw": "Tuesday - 2 pm to 3 pm"
+ },
+ {
+  "street": "First St",
+  "side": "North",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "River St. to Willow Ave.",
+  "raw": "Wednesday - 10 am to 11 am"
+ },
+ {
+  "street": "First St",
+  "side": "South",
+  "days": [
+   "Thursday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "Willow Ave. to River St.",
+  "raw": "Thursday - 10 am to 11 am"
+ },
+ {
+  "street": "Fourteenth St",
+  "side": "South",
+  "days": [
+   "Monday"
+  ],
+  "start": 8,
+  "end": 9,
+  "location": "Willow Ave. to Hudson St.",
+  "raw": "Monday - 8 am to 9 am"
+ },
+ {
+  "street": "Fourteenth St",
+  "side": "North",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 8,
+  "end": 9,
+  "location": "Hudson St. to Willow Ave.",
+  "raw": "Wednesday - 8 am to 9 am"
+ },
+ {
+  "street": "Fourth St",
+  "side": "North",
+  "days": [
+   "Monday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Willow Ave. to Harrison St.",
+  "raw": "Monday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Fourth St",
+  "side": "South",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Willow Ave. to Harrison St.",
+  "raw": "Tuesday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Fourth St",
+  "side": "North",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "River St. to Willow Ave.",
+  "raw": "Wednesday - 11 am to 12 noon"
+ },
+ {
+  "street": "Fourth St",
+  "side": "South",
+  "days": [
+   "Thursday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "River St. to Willow Ave.",
+  "raw": "Thursday - 11 am to 12 noon"
+ },
+ {
+  "street": "Garden St",
+  "side": "East",
+  "days": [
+   "Monday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Fourteenth St. to Observer Hwy.",
+  "raw": "Monday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Garden St",
+  "side": "West",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Fourteenth St. to Observer Hwy.",
+  "raw": "Tuesday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Grand St",
+  "side": "East",
+  "days": [
+   "Thursday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "Sixteenth St. to Newark St.",
+  "raw": "Thursday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Grand St",
+  "side": "West",
+  "days": [
+   "Friday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "Sixteenth St. to Newark St.",
+  "raw": "Friday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Grand St",
+  "side": "East",
+  "days": [
+   "Thursday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Eleventh St. to Tenth St.",
+  "raw": "Thursday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Grand St",
+  "side": "West",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Eleventh St. to Tenth St.",
+  "raw": "Wednesday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Grove St",
+  "side": "Both",
+  "days": [
+   "Monday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "Newark St. to the south boundary",
+  "raw": "Monday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Harrison St",
+  "side": "East",
+  "days": [
+   "Monday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Fifth St. to the northern boundary",
+  "raw": "Monday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Harrison St",
+  "side": "East",
+  "days": [
+   "Thursday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Fourth St. to Newark St.",
+  "raw": "Thursday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Harrison St",
+  "side": "West",
+  "days": [
+   "Friday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Fourth St. to Newark St.",
+  "raw": "Friday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Henderson St",
+  "side": "Both",
+  "days": [
+   "Monday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "Newark St. to south boundary",
+  "raw": "Monday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Hudson Place",
+  "side": "South",
+  "days": [
+   "Thursday"
+  ],
+  "start": 8,
+  "end": 9,
+  "location": "Hudson St. to east boundary",
+  "raw": "Thursday - 8 am to 9 am"
+ },
+ {
+  "street": "Hudson Place",
+  "side": "North",
+  "days": [
+   "Friday"
+  ],
+  "start": 8,
+  "end": 9,
+  "location": "Hudson St. to east boundary",
+  "raw": "Friday - 8 am to 9 am"
+ },
+ {
+  "street": "Hudson St",
+  "side": "West",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "Fourteenth St. to Observer Hwy.",
+  "raw": "Wednesday - 10 am to 11 am"
+ },
+ {
+  "street": "Hudson St",
+  "side": "East",
+  "days": [
+   "Friday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "Fourteenth St. to Observer Hwy.",
+  "raw": "Friday - 10 am to 11 am"
+ },
+ {
+  "street": "Hudson St",
+  "side": "East",
+  "days": [
+   "Friday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "Fourteenth St. to Fifteenth St.",
+  "raw": "Friday - 10 am to 11 am"
+ },
+ {
+  "street": "Hudson St",
+  "side": "West",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "Fourteenth St. to Fifteenth St.",
+  "raw": "Wednesday - 10 am to 11 am"
+ },
+ {
+  "street": "Jackson St",
+  "side": "East",
+  "days": [
+   "Thursday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Newark St. to north boundary",
+  "raw": "Thursday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Jackson St",
+  "side": "West",
+  "days": [
+   "Friday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Newark St. to north boundary",
+  "raw": "Friday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Jefferson St",
+  "side": "East",
+  "days": [
+   "Thursday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "Sixteenth St. to Observer Hwy.",
+  "raw": "Thursday - 10 am to 11 am"
+ },
+ {
+  "street": "Jefferson St",
+  "side": "West",
+  "days": [
+   "Friday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "Sixteenth St. to Observer Hwy.",
+  "raw": "Friday - 10 am to 11 am"
+ },
+ {
+  "street": "Madison St",
+  "side": "East",
+  "days": [
+   "Thursday"
+  ],
+  "start": 9,
+  "end": 10,
+  "location": "Newark St. to Fifteenth St.",
+  "raw": "Thursday - 9 am to 10 am"
+ },
+ {
+  "street": "Madison St",
+  "side": "West",
+  "days": [
+   "Friday"
+  ],
+  "start": 9,
+  "end": 10,
+  "location": "Newark St. to Fifteenth St.",
+  "raw": "Friday - 9 am to 10 am"
+ },
+ {
+  "street": "Marshall St",
+  "side": "West",
+  "days": [
+   "Thursday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "First St. to Second St.",
+  "raw": "Thursday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Marshall St",
+  "side": "East",
+  "days": [
+   "Monday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "First St. to Second St.",
+  "raw": "Monday- 2pm to 3pm"
+ },
+ {
+  "street": "Monroe St",
+  "side": "West",
+  "days": [
+   "Monday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "Eleventh St. to Newark St.",
+  "raw": "Monday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Monroe St",
+  "side": "East",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "Eleventh St. to Newark St.",
+  "raw": "Tuesday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Newark St",
+  "side": "Both",
+  "days": [
+   "Monday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "Henderson St. to west boundary",
+  "raw": "Monday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Newark St",
+  "side": "South",
+  "days": [
+   "Thursday"
+  ],
+  "start": 8,
+  "end": 9,
+  "location": "Washington St. to east boundary",
+  "raw": "Thursday - 8 am to 9 am"
+ },
+ {
+  "street": "Newark St",
+  "side": "South",
+  "days": [
+   "Thursday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "Washington St. to Willow Ave.",
+  "raw": "Thursday - 10 am to 11 am"
+ },
+ {
+  "street": "Newark St",
+  "side": "South",
+  "days": [
+   "Thursday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "Willow Ave. to Jefferson St.",
+  "raw": "Thursday - 11 am to 12 noon"
+ },
+ {
+  "street": "Newark St",
+  "side": "North",
+  "days": [
+   "Friday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "Washington St. to Jefferson St.",
+  "raw": "Friday - 11 am to 12 noon"
+ },
+ {
+  "street": "Newark St",
+  "side": "North",
+  "days": [
+   "Friday"
+  ],
+  "start": 8,
+  "end": 9,
+  "location": "Washington St. to north boundary",
+  "raw": "Friday - 8 am to 9 am"
+ },
+ {
+  "street": "Ninth St",
+  "side": "South",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Jackson St. to Willow Ave.",
+  "raw": "Wednesday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Ninth St",
+  "side": "North",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "Willow Ave. to east boundary",
+  "raw": "Wednesday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Ninth St",
+  "side": "North",
+  "days": [
+   "Friday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Jackson St. to Willow Ave.",
+  "raw": "Friday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Ninth St",
+  "side": "South",
+  "days": [
+   "Friday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "Willow Ave. to east boundary",
+  "raw": "Friday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Observer Hwy",
+  "side": "Both",
+  "days": [
+   "Thursday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "Jefferson St. to Monroe St.",
+  "raw": "Thursday - 11 am to 12 noon"
+ },
+ {
+  "street": "Observer Hwy",
+  "side": "Both",
+  "days": [
+   "Friday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "Hudson St. to Henderson St.",
+  "raw": "Friday - 11 am to 12 noon"
+ },
+ {
+  "street": "Park Ave",
+  "side": "East",
+  "days": [
+   "Monday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "Observer Hwy. to Fourteenth St.",
+  "raw": "Monday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Park Ave",
+  "side": "West",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "Observer Hwy. to Fourteenth St.",
+  "raw": "Tuesday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Paterson Ave",
+  "side": "Both",
+  "days": [
+   "Thursday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "Monroe St. to west boundary",
+  "raw": "Thursday - 11 am to 12 noon"
+ },
+ {
+  "street": "River St",
+  "side": "Both",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 8,
+  "end": 9,
+  "location": "Hudson Place to Fourth St.",
+  "raw": "Tuesday - 8 am to 9 am"
+ },
+ {
+  "street": "River Terrace",
+  "side": "East",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "Fifth St. to Seventh St.",
+  "raw": "Wednesday - 11 am to 12 noon"
+ },
+ {
+  "street": "River Terrace",
+  "side": "West",
+  "days": [
+   "Thursday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "Fifth St. to Seventh St.",
+  "raw": "Thursday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Second St",
+  "side": "North",
+  "days": [
+   "Monday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Willow Ave. to Marshall St.",
+  "raw": "Monday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Second St",
+  "side": "South",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Willow Ave. to Marshall St.",
+  "raw": "Tuesday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Second St",
+  "side": "North",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "River St. to Willow Ave.",
+  "raw": "Wednesday - 10 am to 11 am"
+ },
+ {
+  "street": "Second St",
+  "side": "South",
+  "days": [
+   "Thursday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "River St. to Willow Ave.",
+  "raw": "Thursday - 10 am to 11 am"
+ },
+ {
+  "street": "Seventh St",
+  "side": "North",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "Willow Ave. to Hudson St.",
+  "raw": "Wednesday - 11 am to 12 noon"
+ },
+ {
+  "street": "Seventh St",
+  "side": "South",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Jackson St. to Willow Ave.",
+  "raw": "Wednesday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Seventh St",
+  "side": "South",
+  "days": [
+   "Thursday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "Willow Ave. to Hudson St.",
+  "raw": "Thursday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Seventh St",
+  "side": "North",
+  "days": [
+   "Friday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Jackson St. to Willow Ave.",
+  "raw": "Friday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Sinatra Drive",
+  "side": "West",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 8,
+  "end": 9,
+  "location": "Sixth St. to Fifth St.",
+  "raw": "Wednesday 8 am to 9 am"
+ },
+ {
+  "street": "Sinatra Drive",
+  "side": "East",
+  "days": [
+   "Monday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "Fifth St. to Eleventh St.",
+  "raw": "Monday - 10 am to 11 am"
+ },
+ {
+  "street": "Sinatra Drive",
+  "side": "West",
+  "days": [
+   "Monday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "First St. to Fourth St.",
+  "raw": "Monday - 10 am to 11 am"
+ },
+ {
+  "street": "Sixteenth St",
+  "side": "South",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "West boundary to Park Ave.",
+  "raw": "Wednesday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Sixteenth St",
+  "side": "North",
+  "days": [
+   "Friday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "West boundary to Park Ave.",
+  "raw": "Friday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Sixth St",
+  "side": "North",
+  "days": [
+   "Monday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Willow Ave. to west boundary",
+  "raw": "Monday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Sixth St",
+  "side": "South",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Willow Ave. to west boundary",
+  "raw": "Tuesday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Sixth St",
+  "side": "North",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "Willow Ave. to east boundary",
+  "raw": "Wednesday - 11 am to 12 noon"
+ },
+ {
+  "street": "Sixth St",
+  "side": "South",
+  "days": [
+   "Thursday"
+  ],
+  "start": 13,
+  "end": 14,
+  "location": "Willow Ave. to east boundary",
+  "raw": "Thursday - 1 pm to 2 pm"
+ },
+ {
+  "street": "Tenth St",
+  "side": "South",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Hudson St. to Madison St.",
+  "raw": "Wednesday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Tenth St",
+  "side": "North",
+  "days": [
+   "Thursday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Hudson St. to Madison St.",
+  "raw": "Thursday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Tenth St",
+  "side": "South",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Clinton St. to Grand St.",
+  "raw": "Wednesday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Tenth St",
+  "side": "North",
+  "days": [
+   "Thursday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Clinton St. to Grand St.",
+  "raw": "Thursday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Third St",
+  "side": "North",
+  "days": [
+   "Monday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Jackson St. to Willow Ave.",
+  "raw": "Monday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Third St",
+  "side": "South",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Jackson St. to Willow Ave.",
+  "raw": "Tuesday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Third St",
+  "side": "North",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "Willow Ave. to River St.",
+  "raw": "Wednesday - 11 am to 12 noon"
+ },
+ {
+  "street": "Third St",
+  "side": "South",
+  "days": [
+   "Thursday"
+  ],
+  "start": 11,
+  "end": 12,
+  "location": "Willow Ave. to River St.",
+  "raw": "Thursday - 11 am to 12 noon"
+ },
+ {
+  "street": "Thirteenth St",
+  "side": "North",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "Hudson St. to Willow Ave.",
+  "raw": "Tuesday - 10 am to 11 am"
+ },
+ {
+  "street": "Thirteenth St",
+  "side": "South",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Hudson St. to Willow Ave.",
+  "raw": "Wednesday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Thirteenth St",
+  "side": "South",
+  "days": [
+   "Thursday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Willow Ave. to Madison St.",
+  "raw": "Thursday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Thirteenth St",
+  "side": "North",
+  "days": [
+   "Friday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "Willow Ave. to Madison St.",
+  "raw": "Friday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Twelfth St",
+  "side": "North",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "Willow Ave. to Hudson St.",
+  "raw": "Tuesday - 10 am to 11 am"
+ },
+ {
+  "street": "Twelfth St",
+  "side": "South",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 14,
+  "end": 15,
+  "location": "Willow Ave. to Hudson St.",
+  "raw": "Wednesday - 2 pm to 3 pm"
+ },
+ {
+  "street": "Twelfth St",
+  "side": "South",
+  "days": [
+   "Thursday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "West boundary to Willow Ave.",
+  "raw": "Thursday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Twelfth St",
+  "side": "North",
+  "days": [
+   "Friday"
+  ],
+  "start": 15,
+  "end": 16,
+  "location": "West boundary to Willow Ave.",
+  "raw": "Friday - 3 pm to 4 pm"
+ },
+ {
+  "street": "Vezzetti Way",
+  "side": "South",
+  "days": [
+   "Monday"
+  ],
+  "start": 8,
+  "end": 9,
+  "location": "Henderson St. to Washington St.",
+  "raw": "Monday - 8 am to 9 am"
+ },
+ {
+  "street": "Vezzetti Way",
+  "side": "North",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 8,
+  "end": 9,
+  "location": "Henderson St. to Washington St.",
+  "raw": "Tuesday - 8 am to 9 am"
+ },
+ {
+  "street": "Washington St",
+  "side": "East",
+  "days": [
+   "Monday",
+   "Tuesday",
+   "Wednesday",
+   "Thursday",
+   "Friday"
+  ],
+  "start": 8,
+  "end": 9,
+  "location": "Observer Hwy. to Seventh St.",
+  "raw": "Monday through Friday - 8 am to 9 am"
+ },
+ {
+  "street": "Washington St",
+  "side": "West",
+  "days": [
+   "Monday",
+   "Tuesday",
+   "Wednesday",
+   "Thursday",
+   "Friday"
+  ],
+  "start": 9,
+  "end": 10,
+  "location": "Eighth St. to Fifteenth St.",
+  "raw": "Monday through Friday - 9 am to 10 am"
+ },
+ {
+  "street": "Washington St",
+  "side": "East",
+  "days": [
+   "Monday",
+   "Tuesday",
+   "Wednesday",
+   "Thursday",
+   "Friday"
+  ],
+  "start": 8,
+  "end": 9,
+  "location": "Eighth St. to Fifteenth St.",
+  "raw": "Monday-Friday - 8 am to 9 am"
+ },
+ {
+  "street": "Washington St",
+  "side": "West",
+  "days": [
+   "Monday",
+   "Tuesday",
+   "Wednesday",
+   "Thursday",
+   "Friday"
+  ],
+  "start": 8,
+  "end": 9,
+  "location": "Observer Hwy. to Eighth St.",
+  "raw": "Monday through Friday - 8 am to 9 am"
+ },
+ {
+  "street": "Washington St",
+  "side": "East",
+  "days": [
+   "Monday",
+   "Tuesday",
+   "Wednesday",
+   "Thursday",
+   "Friday"
+  ],
+  "start": 9,
+  "end": 10,
+  "location": "Seventh St. to Eighth St.",
+  "raw": "Monday through Friday- 9 am to 10 am"
+ },
+ {
+  "street": "Willow Ave",
+  "side": "West",
+  "days": [
+   "Monday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "Fourteenth St. to Observer Hwy.",
+  "raw": "Monday - 10 am to 11 am"
+ },
+ {
+  "street": "Willow Ave",
+  "side": "East",
+  "days": [
+   "Tuesday"
+  ],
+  "start": 10,
+  "end": 11,
+  "location": "Fourteenth St. to Observer Hwy.",
+  "raw": "Tuesday - 10 am to 11 am"
+ },
+ {
+  "street": "Willow Ave",
+  "side": "Both",
+  "days": [
+   "Wednesday"
+  ],
+  "start": 8,
+  "end": 9,
+  "location": "Fourteenth St. to north boundary",
+  "raw": "Wednesday - 8 am to 9 am"
+ }
+]
