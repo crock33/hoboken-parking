@@ -35,6 +35,9 @@ label.chk{display:flex;gap:10px;align-items:center;margin:10px 0}label.chk input
 details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}summary{font-weight:700;cursor:pointer}
 .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:#222;color:#fff;padding:10px 18px;border-radius:20px;z-index:9;font-size:15px}
 #map{height:300px;border-radius:12px;margin:8px 0}.pick{display:block;width:100%;text-align:left;margin:6px 0}.hint{color:var(--mute);font-size:14px;margin:4px 0}
+#bigmap{height:calc(100vh - 210px);min-height:380px;border-radius:16px;border:3px solid #2b4a6b;background:#8fd3f4}
+.legend{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mute);margin:8px 2px}.legend .bar{flex:1;height:12px;border-radius:6px;background:linear-gradient(90deg,#e03b3b,#f0a020,#e8d23a,#35b04a);border:1px solid var(--line)}
+.stlabel{background:none;border:0;box-shadow:none;font:700 10px system-ui;color:#3a4a5a;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff;white-space:nowrap}
 .hide{display:none}.empty{text-align:center;color:var(--mute);padding:30px 10px}
 </style>
 </head>
@@ -46,8 +49,9 @@ details{background:var(--card);border:1px solid var(--line);border-radius:14px;p
 <div class="row"><button class="btn alt" id="gps">📍 Use my location</button><button class="btn alt" id="pinBtn">🗺 Drop a pin</button></div>
 <div id="mapWrap" class="hide"><div class="hint">Tap the map where your car is.</div><div id="map"></div></div>
 <div id="locRes"></div></div>
-<div id="carSettings"></div></section><section id="tab-fav" class="hide"></section></main>
-<nav><button data-t="find" class="on"><span>🔎</span>Find parking</button><button data-t="car"><span>🚗</span>My car</button><button data-t="fav"><span>★</span>Saved</button></nav>
+<div id="carSettings"></div></section><section id="tab-map" class="hide"><div id="bigmap"></div><div class="legend"><span>Cleaning now / soon</span><div class="bar"></div><span>Just cleaned</span></div><div class="hint">Each side of the street has its own line. Tap a line for details.</div></section>
+<section id="tab-fav" class="hide"></section></main>
+<nav><button data-t="find" class="on"><span>🔎</span>Find parking</button><button data-t="map"><span>🗺️</span>Map</button><button data-t="car"><span>🚗</span>My car</button><button data-t="fav"><span>★</span>Saved</button></nav>
 <script>
 const DAYNUM={Sunday:0,Monday:1,Tuesday:2,Wednesday:3,Thursday:4,Friday:5,Saturday:6};
 const $=s=>document.querySelector(s);
@@ -202,9 +206,54 @@ function wireLocate(){
   $('#pinBtn').onclick=()=>{$('#mapWrap').classList.remove('hide');initMap();setTimeout(()=>map.invalidateSize(),50)};
   $('#gps').onclick=()=>{if(!navigator.geolocation)return toast('Location not available');toast('Finding you…');
     navigator.geolocation.getCurrentPosition(pos=>{$('#mapWrap').classList.remove('hide');initMap();setTimeout(()=>{map.invalidateSize();byPoint([pos.coords.latitude,pos.coords.longitude],'Your location')},60)},()=>toast('Couldn\'t get your location — type a corner or drop a pin'),{enableHighAccuracy:true,timeout:10000})}}
+
+// ---- cartoon overview map ----
+let bm=null,bmRoads=null,bmBound=null,bmLayer=null,bmBase=null,bmLabels=null,bmCar=null;
+const SAFE_MAX=6*864e5;
+function safeColor(r){ // green = safest (longest until next sweep) -> red = cleaning now/soon
+  const st=status(r);let f;
+  if(settings.suspended)f=1;else if(st.active)f=0;else if(!st.next)f=1;else f=Math.min(1,(st.next.start-new Date())/SAFE_MAX);
+  const hue=f*125,sat=92,li=hue<40?50:hue<90?47:40;return `hsl(${hue.toFixed(0)},${sat}%,${li}%)`}
+function hull(P){P=P.slice().sort((a,b)=>a[1]-b[1]||a[0]-b[0]);const cr=(o,a,b)=>(a[1]-o[1])*(b[0]-o[0])-(a[0]-o[0])*(b[1]-o[1]);
+  const lo=[],up=[];for(const p of P){while(lo.length>1&&cr(lo[lo.length-2],lo[lo.length-1],p)<=0)lo.pop();lo.push(p)}
+  for(const p of P.slice().reverse()){while(up.length>1&&cr(up[up.length-2],up[up.length-1],p)<=0)up.pop();up.push(p)}
+  return lo.slice(0,-1).concat(up.slice(0,-1))}
+function offsetLine(pts,m,leftSide){ // shift polyline sideways by m metres (left of travel direction if leftSide)
+  const n=pts.length,out=[];
+  for(let i=0;i<n;i++){const a=pts[Math.max(0,i-1)],b=pts[Math.min(n-1,i+1)];
+    let dx=(b[1]-a[1])*MX,dy=(b[0]-a[0])*MY;const l=Math.hypot(dx,dy)||1;dx/=l;dy/=l;
+    const nx=leftSide?-dy:dy,ny=leftSide?dx:-dx;out.push([pts[i][0]+ny*m/MY,pts[i][1]+nx*m/MX])}
+  return out}
+function openMap(){
+  if(!bm){
+    bm=L.map('bigmap',{zoomSnap:.25,zoomControl:true,attributionControl:false,maxBounds:[[40.72,-74.06],[40.77,-74.005]]}).setView([40.7455,-74.0295],14.5);
+    bm.getContainer().style.background='#8fd3f4';
+    bmBase=L.layerGroup().addTo(bm);bmLabels=L.layerGroup().addTo(bm);
+    const all=[];Object.values(GEO.streets).forEach(s=>s.lines.forEach(l=>l.forEach(p=>all.push(p))));
+    const h=hull(all),c=h.reduce((a,p)=>[a[0]+p[0]/h.length,a[1]+p[1]/h.length],[0,0]);
+    const big=h.map(p=>[c[0]+(p[0]-c[0])*1.05,c[1]+(p[1]-c[1])*1.05]);
+    const poly=L.polygon(big,{color:'#2b4a6b',weight:4,fillColor:'#fff4d6',fillOpacity:1,lineJoin:'round'}).addTo(bmBase);bmBound=poly.getBounds();bm.fitBounds(bmBound,{padding:[6,6]});
+    bmRoads=L.layerGroup().addTo(bm);
+    Object.entries(GEO.streets).forEach(([k,s])=>{const l=s.lines.reduce((a,b)=>b.length>a.length?b:a);const m=l[Math.floor(l.length/2)];
+      bmLabels.addLayer(L.marker(m,{interactive:false,icon:L.divIcon({className:'stlabel',html:nameOf(k).replace(/ (Street|St)$/,'')})}))});
+    bm.on('zoomend',()=>{drawSides();bm.getZoom()>=16?bm.addLayer(bmLabels):bm.removeLayer(bmLabels)});
+    bm.removeLayer(bmLabels);
+  }
+  setTimeout(()=>{bm.invalidateSize();if(!bm._fitted&&bmBound){bm.fitBounds(bmBound,{padding:[6,6]});bm._fitted=1}drawSides()},60)}
+function drawSides(){
+  if(!bm||!GEO)return;if(bmLayer)bmLayer.remove();bmLayer=L.layerGroup().addTo(bm);
+  const z=bm.getZoom(),mpp=156543*Math.cos(40.745*Math.PI/180)/Math.pow(2,z),px=z>=16.5?7:z>=15.5?5:3.6,off=mpp*px,w=z>=16.5?6:z>=15.5?4:2.6,road=Math.round(px*2+w+3);
+  bmRoads.clearLayers();Object.values(GEO.streets).forEach(s=>s.lines.forEach(l=>{L.polyline(l,{color:'#9aa7b4',weight:road+3,lineCap:'round',interactive:false}).addTo(bmRoads);L.polyline(l,{color:'#fff',weight:road,lineCap:'round',interactive:false}).addTo(bmRoads)}));
+  DATA.forEach((r,i)=>{const g=GEO.rows[i];if(!g||g.pts.length<2)return;const col=safeColor(r),st=status(r);
+    const sides=r.side==='Both'?[true,false]:[(r.side==='West'||r.side==='North')];
+    sides.forEach(left=>{const ln=L.polyline(offsetLine(g.pts,off,left),{color:col,weight:w,lineCap:'round',opacity:1,dashArray:st.active?'2 8':null}).addTo(bmLayer);
+      const v=safety(r,st);ln.bindPopup(`<b>${place(r)}</b><br>${r.location}<br>${v.t}<br><span style="color:#667">cleans ${dayShort(r)} ${hrs(r)}</span><br><a href="#" data-park="${key(r)}">I parked here</a>`)})});
+  if(bmCar){bmCar.remove();bmCar=null}
+  const cr=car&&rowOf(car.key);if(cr){const g=GEO.rows[DATA.indexOf(cr)];if(g?.pts.length){const m=g.pts[Math.floor(g.pts.length/2)];
+    bmCar=L.marker(m,{icon:L.divIcon({className:'',html:'<div style="font-size:26px;filter:drop-shadow(0 1px 2px #000)">🚗</div>',iconSize:[26,26],iconAnchor:[13,13]})}).addTo(bm)}}}
 function parkAt(k){car={key:k,at:Date.now()};store.set('car',car);askNotify();schedule();render();showTab('car');toast('Saved — we\'ll track this spot')}
 function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),2200)}
-function showTab(t){document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x.dataset.t===t));['find','car','fav'].forEach(n=>$('#tab-'+n).classList.toggle('hide',n!==t));scrollTo(0,0);store.set('tab',t)}
+function showTab(t){document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x.dataset.t===t));['find','map','car','fav'].forEach(n=>$('#tab-'+n).classList.toggle('hide',n!==t));scrollTo(0,0);if(t==='map')openMap();store.set('tab',t)}
 
 // ---- alerts (in-page timers; calendar file is the reliable way when app is closed) ----
 let timers=[];
@@ -232,10 +281,10 @@ function render(){
   else if(!todayAny&&nxt)msg='No street cleaning today — park anywhere legal. Cleaning resumes '+fmtT(nxt.start)+'.';
   $('#banner').innerHTML=msg?`<div class="banner">${msg}</div>`:'';
   $('#now').textContent=now.toLocaleString([],{weekday:'long',hour:'numeric',minute:'2-digit'});
-  renderFind();renderFav();renderCar()}
+  renderFind();renderFav();renderCar();if(bm&&!$('#tab-map').classList.contains('hide'))drawSides()}
 document.addEventListener('click',e=>{const t=e.target;
   if(t.dataset?.fav){favs=favs.includes(t.dataset.fav)?favs.filter(x=>x!==t.dataset.fav):[...favs,t.dataset.fav];store.set('favs',favs);render()}
-  else if(t.dataset?.park)parkAt(t.dataset.park);
+  else if(t.dataset?.park){e.preventDefault();parkAt(t.dataset.park)}
   else if(t.dataset?.f){filter=t.dataset.f;renderFind()}});
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showTab(b.dataset.t));
 Promise.all([fetch('data.json').then(r=>r.json()),fetch('geo.json').then(r=>r.json())]).then(([d,g])=>{DATA=d;GEO=g;wireLocate();render();schedule();showTab(store.get('tab',car?'car':'find'));
